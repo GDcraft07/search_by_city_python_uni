@@ -47,3 +47,18 @@ def delet_json(file: str, data_to_delet: str) -> bool:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
     return True
+
+
+def check_in_json(file: str, data_to_check: tuple) -> tuple:
+    data = read_json(file)
+
+    try:
+        item = data[data_to_check[0]]
+
+        if item != data_to_check[1]:
+            return (False, True)
+
+        return (True, None)
+
+    except KeyError:
+        return (False, False)

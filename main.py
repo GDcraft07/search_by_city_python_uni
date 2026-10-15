@@ -1,8 +1,9 @@
 from config import *
 from code.work_with_json import *
+from code.authorization import *
 
 def main():
-    add_to_json(JSON_PATH_CITIES, ("Пушкин", 1000000))
+    pass
 
 
 if __name__ == "__main__":
