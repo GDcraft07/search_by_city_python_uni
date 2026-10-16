@@ -1,11 +1,11 @@
-from config import LINK_CITIES_INFORMATION
+from config import LINK_CITIES_INFORMATION, USER_AGENT_FOR_RUSSIAN_CITES, ACCEPT_FOR_RUSSIAN_CITIES
 import requests
 from bs4 import BeautifulSoup
 
 
-def get_html(link: str) -> str:
-    st_accept = "text/html"
-    st_useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 YaBrowser/26.8.0.0 Safari/537.36"
+def get_html(link: str, user_agent: str, accept) -> str:
+    st_accept = accept
+    st_useragent = user_agent
 
     headers = {
         "Accept": st_accept,
@@ -32,8 +32,23 @@ def get_cities(src: str) -> dict:
     return cities
 
 
-def population_validation(name_city: str, population: int, is_new_city: bool) -> bool:
+def population_validation(name_city: str, population: int, is_new_city: bool) -> tuple:
     if is_new_city:
-        return population <= 41_900_000
+        if population <= 41_900_000:
+            return (True, None)
+        
+        return (False, "В городе не может проживать больше 41,9 млн человек")
 
-    
+    russian_cities = get_cities(get_html(LINK_CITIES_INFORMATION, USER_AGENT_FOR_RUSSIAN_CITES, ACCEPT_FOR_RUSSIAN_CITIES))
+
+    try:
+        real_population = russian_cities[name_city.lower()]
+
+        if abs(1 - (population / real_population)) <= 0.1:
+            return (True, None)
+
+        return (False, "Данная численность населения откланяется на 10% от данных переписи 2025 года")
+
+    except KeyError:
+        return (False, "Города нету в базе данных Российских городов, проверьте правильно ли Вы написали название или просто отметьте его как новый город")
+
