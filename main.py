@@ -1,9 +1,9 @@
 from config import *
 from code.work_with_json import *
-from code.authorization import *
+from code.parsing import *
 
 def main():
-    pass
+    print(get_cities(get_html(LINK_CITIES_INFORMATION)))
 
 
 if __name__ == "__main__":
