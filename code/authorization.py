@@ -1,4 +1,4 @@
-from config import SALT, JSON_PATH_USERS
+from config import SALT, JSON_PATH_USERS, ADMIN_START_TOKEN
 from work_with_json import add_to_json, check_in_json
 import hashlib
 
@@ -32,7 +32,12 @@ def registration(login: str, password: str) -> tuple:
     except Exception as password_error_message:
         return (False, password_error_message)
 
-    try_add_user = add_to_json(JSON_PATH_USERS, (login, hashing_password(password)))
+    admin_status = False
+
+    if password[:2] == ADMIN_START_TOKEN:
+        admin_status = True
+    
+    try_add_user = add_to_json(JSON_PATH_USERS, (login, {"password": hashing_password(password), "admin_status": admin_status}))
 
     if try_add_user:
         return (True, None)
@@ -41,4 +46,4 @@ def registration(login: str, password: str) -> tuple:
 
 
 def sign_in(login: str, password: str) -> tuple:
-    return check_in_json(JSON_PATH_USERS, (login, password))
+    return check_in_json(JSON_PATH_USERS, (login, {"password": hashing_password(password), "admin_status": True})) or check_in_json(JSON_PATH_USERS, (login, {"password": hashing_password(password), "admin_status": False}))

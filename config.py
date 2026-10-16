@@ -11,3 +11,5 @@ LINK_CITIES_INFORMATION = "https://russiametrics.ru/cities"
 USER_AGENT_FOR_RUSSIAN_CITES = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 YaBrowser/26.8.0.0 Safari/537.36"
 
 ACCEPT_FOR_RUSSIAN_CITIES = "text/html"
+
+ADMIN_START_TOKEN = "f1"

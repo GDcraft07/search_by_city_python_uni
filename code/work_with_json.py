@@ -62,3 +62,9 @@ def check_in_json(file: str, data_to_check: tuple) -> tuple:
 
     except KeyError:
         return (False, False)
+
+
+def is_admin(file: str, login: str) -> bool:
+    data = read_json(file)
+
+    return data[login]["admin_status"]
