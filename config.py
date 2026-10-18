@@ -17,4 +17,4 @@ ADMIN_START_TOKEN = "f1"
 WIDTH = 750
 HEIGHT = 400
 
-STANDARD_FONT = ("Arial", 10)
+STANDARD_FONT = ("Arial", 10, "bold")

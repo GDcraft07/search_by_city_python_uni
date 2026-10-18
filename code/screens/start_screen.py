@@ -1,9 +1,9 @@
 import root_screen
 from tkinter import *
 from tkinter import ttk
+from config import STANDARD_FONT
 
-
-def start_screen():
+def start_screen() -> None:
     root = root_screen()
 
     frame = ttk.Frame(master=root, borderwidth=1, relief=SOLID)
@@ -17,7 +17,7 @@ def start_screen():
     frame_authorization.pack(anchor=NW, fill=X, padx=20, pady=20)
 
 
-    label_offline_search = ttk.Label(master=frame_search, text="Оффлайн поиск:", font=("Arial", 10, "bold"), justify=CENTER)
+    label_offline_search = ttk.Label(master=frame_search, text="Оффлайн поиск:", font=STANDARD_FONT, justify=CENTER)
     label_offline_search.pack(pady=5)
 
     entry_search = ttk.Entry(master=frame_search, justify=CENTER, width=frame_search.winfo_width())
